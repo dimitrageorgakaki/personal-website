@@ -22,6 +22,7 @@ npm run preview  # serve the built site
 | Intro text, name, profile links | `src/data/site.ts` |
 | Biography timeline, education, languages | `src/data/timeline.ts` |
 | Blog posts (Markdown) | `src/content/blog/` |
+| Fun pictures on the home page | `src/assets/fun/` (see its README) |
 | Colours, spacing, radii, fonts | `src/styles/tokens.css` |
 | Pages | `src/pages/` |
 
