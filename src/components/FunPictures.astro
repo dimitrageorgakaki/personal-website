@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import captions from '../assets/fun/captions.json';
+
+// Drop AI-made pictures into src/assets/fun/ (jpg, png or webp). They appear here
+// automatically, sorted by file name. This section is hidden while the folder is empty.
+// Captions: name a file like "01-astronaut.jpg" and the words after the number become the
+// caption. For a full caption and description, add an entry keyed by the file name
+// (without extension) to captions.json.
+const modules = import.meta.glob<{ default: ImageMetadata }>('../assets/fun/*.{jpg,jpeg,png,webp,avif}', { eager: true });
+const pictures = Object.entries(modules)
+  .sort(([a], [b]) => a.localeCompare(b))
+  .map(([path, mod]) => {
+    const base = path.split('/').pop()!.replace(/\.[^.]+$/, '');
+    const custom = (captions as Record<string, { caption?: string; alt?: string }>)[base];
+    const fromName = base.replace(/^\d+[-_ ]*/, '').replace(/[-_]+/g, ' ').trim();
+    const caption = custom?.caption ?? fromName;
+    const alt = custom?.alt ?? (caption ? `AI-made picture of Dimitra: ${caption}` : 'AI-made picture of Dimitra');
+    return { src: mod.default, caption, alt };
+  });
+---
+{pictures.length > 0 && (
+  <section aria-labelledby="fun">
+    <h2 id="fun">A lighter side</h2>
+    <p class="note muted">AI-made, so any resemblance is a happy accident.</p>
+    <ul class="grid">
+      {pictures.map((p) => (
+        <li>
+          <figure>
+            <Image src={p.src} alt={p.alt} widths={[360, 720]} sizes="(max-width: 720px) 100vw, 680px" loading="lazy" />
+            {p.caption && <figcaption>{p.caption}</figcaption>}
+          </figure>
+        </li>
+      ))}
+    </ul>
+  </section>
+)}
+<style>
+  h2 { margin-bottom: var(--space-2); }
+  .note { font-size: 14px; margin-bottom: var(--space-3); }
+  .grid { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); align-items: start; }
+  figure { margin: 0; }
+  img { display: block; width: 100%; height: auto; border-radius: var(--radius-lg); border: 1px solid var(--hairline); }
+  figcaption { margin-top: var(--space-2); font-size: 14px; line-height: 21px; color: var(--muted); }
+</style>
