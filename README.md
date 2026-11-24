@@ -28,7 +28,7 @@ npm run preview  # serve the built site
 
 ## Writing a blog post
 
-Copy `src/content/blog/_template.md` to a new file without the leading underscore (for example `my-first-post.md`), fill in the front matter, set `draft: false`, and write in Markdown. The post appears on the Blog page and the home page automatically. Tags in the front matter become clickable tag pages (`/blog/tags/<tag>/`), and every post is added to the RSS feed at `/rss.xml`. Files that start with `_` and posts with `draft: true` are never published.
+Copy `src/content/blog/_template.md` to a new file without the leading underscore (for example `my-first-post.md`), fill in the front matter, set `draft: false`, and write in Markdown. The post appears on the Blog page and the home page automatically. Tags in the front matter become clickable tag pages (`/blog/tags/<tag>/`). Files that start with `_` and posts with `draft: true` are never published.
 
 ## Timeline colours
 
