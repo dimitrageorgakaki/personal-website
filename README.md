@@ -13,7 +13,7 @@ npm run preview  # serve the built site
 
 ## Deploying to GitHub Pages
 
-`.github/workflows/deploy.yml` builds and publishes the site, but only when you start it by hand (Actions tab, Deploy to GitHub Pages, Run workflow), so it never uses Actions minutes on its own. One-time setup: in the repository go to Settings, Pages, and set Source to **GitHub Actions**. The site then lives at `https://<user>.github.io/<repo>/`. The workflow sets `SITE` and `BASE_PATH` automatically; for a custom domain or a `<user>.github.io` repository, set `BASE_PATH` to an empty value in the workflow.
+`.github/workflows/deploy.yml` builds and publishes the site on every push to `main` (it can also be started by hand from the Actions tab). The repository is public, so Actions runs on standard runners are free. One-time setup: in the repository go to Settings, Pages, and set Source to **GitHub Actions**. The site then lives at `https://<user>.github.io/<repo>/`. The workflow sets `SITE` and `BASE_PATH` automatically; for a custom domain or a `<user>.github.io` repository, set `BASE_PATH` to an empty value in the workflow.
 
 ## Where things live
 
