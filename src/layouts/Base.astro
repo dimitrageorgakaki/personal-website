@@ -2,7 +2,7 @@
 import '@fontsource/comic-neue/700.css';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
-import { site } from '../data/site';
+import { site, url } from '../data/site';
 interface Props { title?: string; description?: string }
 const { title, description = site.description } = Astro.props;
 const pageTitle = title ? `${title} · ${site.title}` : site.title;
@@ -15,6 +15,7 @@ const pageTitle = title ? `${title} · ${site.title}` : site.title;
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
+    <link rel="alternate" type="application/rss+xml" title={`${site.name}: writing`} href={url('/rss.xml')} />
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>

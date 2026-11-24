@@ -1,19 +1,29 @@
 ---
 import { url } from '../data/site';
-import { formatDate, readingTime, type Post } from '../data/posts';
+import { formatDate, readingTime, tagSlug, type Post } from '../data/posts';
 interface Props { post: Post }
 const { post } = Astro.props;
 ---
-<a class="row" href={url(`/blog/${post.id}/`)}>
+<article class="row">
   <div class="meta">{formatDate(post.data.date)} · {readingTime(post.body)}</div>
-  <h3>{post.data.title}</h3>
+  <h3><a class="title" href={url(`/blog/${post.id}/`)}>{post.data.title}</a></h3>
   <p>{post.data.summary}</p>
-  <div>{post.data.tags.map((t) => <span class="tag">{t}</span>)}</div>
-</a>
+  {post.data.tags.length > 0 && (
+    <ul class="tags" aria-label="Tags">
+      {post.data.tags.map((t) => <li><a class="tag" href={url(`/blog/tags/${tagSlug(t)}/`)}>{t}</a></li>)}
+    </ul>
+  )}
+</article>
 <style>
-  .row { display: block; padding: var(--space-3) 0; border-top: 1px solid var(--hairline); text-decoration: none; color: inherit; }
-  .row:hover h3 { color: var(--accent); }
+  .row { position: relative; padding: var(--space-3) 0; border-top: 1px solid var(--hairline); }
+  /* The whole row is clickable through the title link; tags sit above it. */
+  .title { color: var(--ink); text-decoration: none; }
+  .title::after { content: ""; position: absolute; inset: 0; }
+  .row:hover .title { color: var(--accent); }
   .meta { font-size: 14px; line-height: 21px; color: var(--muted); }
   h3 { margin: var(--space-1) 0; }
   p { font-size: 15px; line-height: 23px; margin: 0 0 var(--space-2); }
+  .tags { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-1); position: relative; z-index: 1; }
+  .tag { text-decoration: none; margin: 0; }
+  .tag:hover { border-color: var(--accent); color: var(--accent); }
 </style>

@@ -2,7 +2,7 @@
 import { render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { url } from '../../data/site';
-import { getPosts, formatDate, readingTime } from '../../data/posts';
+import { getPosts, formatDate, readingTime, tagSlug } from '../../data/posts';
 
 export async function getStaticPaths() {
   const posts = await getPosts();
@@ -16,13 +16,21 @@ const { Content } = await render(post);
     <p class="back"><a href={url('/blog/')}>← All posts</a></p>
     <div class="meta">{formatDate(post.data.date)} · {readingTime(post.body)}</div>
     <h1>{post.data.title}</h1>
+    {post.data.tags.length > 0 && (
+      <ul class="tags" aria-label="Tags">
+        {post.data.tags.map((t) => <li><a class="tag" href={url(`/blog/tags/${tagSlug(t)}/`)}>{t}</a></li>)}
+      </ul>
+    )}
     <div class="body"><Content /></div>
   </article>
 </Base>
 <style>
   article { margin-top: var(--space-6); }
   .meta { color: var(--muted); font-size: 14px; margin-bottom: var(--space-2); }
-  h1 { margin-bottom: var(--space-5); }
+  h1 { margin-bottom: var(--space-3); }
+  .tags { list-style: none; margin: 0 0 var(--space-5); padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-1); }
+  .tag { text-decoration: none; margin: 0; }
+  .tag:hover { border-color: var(--accent); color: var(--accent); }
   .body :global(h2) { margin: var(--space-6) 0 var(--space-3); }
   .body :global(h3) { margin: var(--space-5) 0 var(--space-2); }
   .body :global(img) { max-width: 100%; height: auto; border-radius: var(--radius-md); }
