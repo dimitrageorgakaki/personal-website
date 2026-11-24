@@ -19,3 +19,7 @@ export const site = {
 };
 
 export const intro = `I’m currently contracting with Diaplous, building services for maritime safety — a domain where getting the system right has consequences well beyond the dashboard. I came to it by an unusual route: my path started in computational materials science, simulating atomic structures to understand how matter behaves, and it turns out the same instinct for modeling complex systems transfers surprisingly well to other domains too. Over the past decade I’ve worked across telecom, fintech, energy, and market research, turning “what if” questions into solutions that actually hold up in production. What keeps me engaged is the problem nobody thinks is solvable: the one where the data is messy, the constraints conflict, and the obvious approaches have already failed. These days I focus on AI architecture, advocating for systems designed to last rather than assembled to demo.`;
+
+// Prefix an internal path with the site's base path (needed on GitHub Pages project sites).
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+export const url = (path: string) => `${base}${path}`;

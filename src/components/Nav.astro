@@ -1,15 +1,15 @@
 ---
-import { site } from '../data/site';
+import { site, url } from '../data/site';
 const path = Astro.url.pathname;
 const internal = [
-  { href: '/biography/', label: 'Biography' },
-  { href: '/blog/', label: 'Blog' },
+  { href: url('/biography/'), label: 'Biography' },
+  { href: url('/blog/'), label: 'Blog' },
 ];
 const current = (href: string) => path.startsWith(href);
 ---
 <header class="wrap">
   <nav aria-label="Main">
-    <a class="name" href="/">{site.name}</a>
+    <a class="name" href={url('/')}>{site.name}</a>
     <ul>
       {internal.map((l) => (
         <li><a class:list={['link', { current: current(l.href) }]} href={l.href} aria-current={current(l.href) ? 'page' : undefined}>{l.label}</a></li>

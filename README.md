@@ -11,6 +11,10 @@ npm run build    # static site in dist/
 npm run preview  # serve the built site
 ```
 
+## Deploying to GitHub Pages
+
+`.github/workflows/deploy.yml` builds and publishes the site on every push to `main`. One-time setup: in the repository go to Settings, Pages, and set Source to **GitHub Actions**. The site then lives at `https://<user>.github.io/<repo>/`. The workflow sets `SITE` and `BASE_PATH` automatically; for a custom domain or a `<user>.github.io` repository, set `BASE_PATH` to an empty value in the workflow.
+
 ## Where things live
 
 | What | Where |
