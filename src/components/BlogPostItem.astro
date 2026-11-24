@@ -1,0 +1,19 @@
+---
+import { url } from '../data/site';
+import { formatDate, readingTime, type Post } from '../data/posts';
+interface Props { post: Post }
+const { post } = Astro.props;
+---
+<a class="row" href={url(`/blog/${post.id}/`)}>
+  <div class="meta">{formatDate(post.data.date)} · {readingTime(post.body)}</div>
+  <h3>{post.data.title}</h3>
+  <p>{post.data.summary}</p>
+  <div>{post.data.tags.map((t) => <span class="tag">{t}</span>)}</div>
+</a>
+<style>
+  .row { display: block; padding: var(--space-3) 0; border-top: 1px solid var(--hairline); text-decoration: none; color: inherit; }
+  .row:hover h3 { color: var(--accent); }
+  .meta { font-size: 14px; line-height: 21px; color: var(--muted); }
+  h3 { margin: var(--space-1) 0; }
+  p { font-size: 15px; line-height: 23px; margin: 0 0 var(--space-2); }
+</style>

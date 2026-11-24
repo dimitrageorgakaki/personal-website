@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import BlogPostItem from '../../components/BlogPostItem.astro';
+import { getPosts } from '../../data/posts';
+const posts = await getPosts();
+---
+<Base title="Blog" description="Writing on AI architecture, research and building systems that last.">
+  <section class="head">
+    <div class="eyebrow">Blog</div>
+    <h1>Writing</h1>
+  </section>
+  <section>
+    {posts.length > 0 ? posts.map((post) => <BlogPostItem post={post} />) : (
+      <p class="muted">No posts yet. The first ones are on their way.</p>
+    )}
+  </section>
+</Base>
+<style>
+  .head { margin-top: var(--space-6); }
+  h1 { margin-top: var(--space-2); }
+</style>

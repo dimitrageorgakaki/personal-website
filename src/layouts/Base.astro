@@ -1,0 +1,33 @@
+---
+import '@fontsource/comic-neue/700.css';
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import { site } from '../data/site';
+interface Props { title?: string; description?: string }
+const { title, description = site.description } = Astro.props;
+const pageTitle = title ? `${title} · ${site.title}` : site.title;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="color-scheme" content="light dark" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <Nav />
+    <main id="main" class="wrap"><slot /></main>
+    <footer class="wrap">
+      <p>© {new Date().getFullYear()} {site.name}. Find me elsewhere:
+        {site.profiles.map((p, i) => <>{i ? ' · ' : ' '}<a href={p.href} target="_blank" rel="noopener noreferrer">{p.name}</a></>)}
+      </p>
+    </footer>
+  </body>
+</html>
+<style>
+  footer { padding-bottom: var(--space-6); font-size: 14px; color: var(--muted); }
+  footer p { margin: 0; padding-top: var(--space-4); border-top: 1px solid var(--hairline); }
+</style>

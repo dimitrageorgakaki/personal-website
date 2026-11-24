@@ -1,0 +1,27 @@
+---
+import type { Entry } from '../data/timeline';
+const { entry } = Astro.props as { entry: Entry };
+const labels = { role: '', volunteer: 'Volunteer', award: 'Award', research: 'Research', teaching: 'Teaching' };
+const label = labels[entry.kind];
+---
+<li class={`entry ${entry.kind}`}>
+  <div class="date">{entry.date}{label && <> · <span class="label">{label}</span></>}</div>
+  <h3>{entry.title}</h3>
+  <div class="org">{entry.org}</div>
+  <p>{entry.story}</p>
+</li>
+<style>
+  .entry { position: relative; padding: 0 0 var(--space-5) var(--space-5); }
+  .entry::before { content: ""; position: absolute; left: -9px; top: 4px; width: 16px; height: 16px; border-radius: 50%; background: var(--ink); border: 3px solid var(--paper); }
+  .volunteer::before { background: var(--green); }
+  .award::before { background: var(--accent); }
+  .research::before, .teaching::before { background: var(--pink); }
+  .date { font-size: 14px; line-height: 21px; color: var(--muted); }
+  .label { font-weight: 600; }
+  .volunteer .label { color: var(--green); }
+  .award .label { color: var(--accent); }
+  .research .label, .teaching .label { color: var(--pink); }
+  h3 { margin: 2px 0; }
+  .org { font-size: 14px; color: var(--muted); margin-bottom: var(--space-2); }
+  p { font-size: 16px; line-height: 25px; margin: 0; }
+</style>
