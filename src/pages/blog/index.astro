@@ -1,15 +1,22 @@
 ---
 import Base from '../../layouts/Base.astro';
 import BlogPostItem from '../../components/BlogPostItem.astro';
-import { getPosts } from '../../data/posts';
+import { url } from '../../data/site';
+import { getPosts, getTags } from '../../data/posts';
 const posts = await getPosts();
+const tags = getTags(posts);
 ---
 <Base title="Blog" description="Writing on AI architecture, research and building systems that last.">
   <section class="head">
     <div class="eyebrow">Blog</div>
     <h1>Writing</h1>
+    {tags.length > 0 && (
+      <ul class="tags" aria-label="Browse by tag">
+        {tags.map((t) => <li><a class="tag" href={url(`/blog/tags/${t.slug}/`)}>{t.tag} <span class="count">{t.count}</span></a></li>)}
+      </ul>
+    )}
   </section>
-  <section>
+  <section class="list">
     {posts.length > 0 ? posts.map((post) => <BlogPostItem post={post} />) : (
       <p class="muted">No posts yet. The first ones are on their way.</p>
     )}
@@ -17,5 +24,10 @@ const posts = await getPosts();
 </Base>
 <style>
   .head { margin-top: var(--space-6); }
+  .list { margin-top: var(--space-5); }
   h1 { margin-top: var(--space-2); }
+  .tags { list-style: none; margin: var(--space-3) 0 0; padding: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: var(--space-2); }
+  .tag { text-decoration: none; margin: 0; padding: 6px var(--space-2); }
+  .tag:hover { border-color: var(--accent); color: var(--accent); }
+  .count { color: var(--muted); margin-left: var(--space-1); }
 </style>

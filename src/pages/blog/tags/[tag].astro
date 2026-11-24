@@ -1,0 +1,32 @@
+---
+import Base from '../../../layouts/Base.astro';
+import BlogPostItem from '../../../components/BlogPostItem.astro';
+import { url } from '../../../data/site';
+import { getPosts, getTags, tagSlug } from '../../../data/posts';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return getTags(posts).map(({ tag, slug }) => ({
+    params: { tag: slug },
+    props: { tag, posts: posts.filter((p) => p.data.tags.some((t) => tagSlug(t) === slug)) },
+  }));
+}
+const { tag, posts } = Astro.props;
+---
+<Base title={`Posts tagged ${tag}`} description={`Blog posts tagged ${tag}.`}>
+  <section class="head">
+    <p class="back"><a href={url('/blog/')}>← All posts</a></p>
+    <div class="eyebrow">Tag</div>
+    <h1>{tag}</h1>
+    <p class="muted">{posts.length} {posts.length === 1 ? 'post' : 'posts'}</p>
+  </section>
+  <section class="list">
+    {posts.map((post) => <BlogPostItem post={post} />)}
+  </section>
+</Base>
+<style>
+  .head { margin-top: var(--space-6); }
+  .list { margin-top: var(--space-5); }
+  h1 { margin: var(--space-2) 0; }
+  .head > .muted { text-align: center; }
+</style>

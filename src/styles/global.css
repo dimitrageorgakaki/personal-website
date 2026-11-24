@@ -9,6 +9,7 @@ body {
   font: 400 17px/27px var(--font-sans);
 }
 h1, h2, h3 { font-family: var(--font-display); font-weight: 700; margin: 0; color: var(--ink); }
+h1, h2, .eyebrow { text-align: center; }
 h1 { font-size: clamp(36px, 7vw, 48px); line-height: 1.1; }
 h2 { font-size: 28px; line-height: 34px; }
 h3 { font-size: 20px; line-height: 26px; }
