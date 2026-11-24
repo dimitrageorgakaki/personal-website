@@ -1,0 +1,34 @@
+# Personal website
+
+A story-led personal site: intro, biography as a timeline, blog, and links to GitHub, LinkedIn and Academia. Built with [Astro](https://astro.build) and plain CSS, no client-side JavaScript.
+
+## Run
+
+```bash
+npm install
+npm run dev      # http://localhost:4321
+npm run build    # static site in dist/
+npm run preview  # serve the built site
+```
+
+## Where things live
+
+| What | Where |
+|---|---|
+| Intro text, name, profile links | `src/data/site.ts` |
+| Biography timeline, education, languages | `src/data/timeline.ts` |
+| Blog posts (Markdown) | `src/content/blog/` |
+| Colours, spacing, radii, fonts | `src/styles/tokens.css` |
+| Pages | `src/pages/` |
+
+## Writing a blog post
+
+Copy `src/content/blog/_template.md` to a new file without the leading underscore (for example `my-first-post.md`), fill in the front matter, set `draft: false`, and write in Markdown. The post appears on the Blog page and the home page automatically. Files that start with `_` and posts with `draft: true` are never published.
+
+## Timeline colours
+
+Each entry has a `kind` in `src/data/timeline.ts`: `role` (ink), `award` (blue), `volunteer` (green), `research` and `teaching` (pink). Every colour also shows a text label.
+
+## Design
+
+Colours, type and components follow the Personal Website design system: cool paper background, one blue accent, Comic Sans for headings only (Comic Neue is bundled as the fallback), a clean sans for body text, automatic dark mode.

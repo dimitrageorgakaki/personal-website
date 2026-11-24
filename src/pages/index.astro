@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import BlogPostItem from '../components/BlogPostItem.astro';
+import ProfileLink from '../components/ProfileLink.astro';
+import { intro, site } from '../data/site';
+import { getPosts } from '../data/posts';
+const posts = (await getPosts()).slice(0, 3);
+const linkedin = site.profiles.find((p) => p.name === 'LinkedIn')!;
+---
+<Base>
+  <section class="intro">
+    <div class="eyebrow">Hello, I'm</div>
+    <h1>{site.name}</h1>
+    <p class="lead">{intro}</p>
+    <a class="button" href={linkedin.href} target="_blank" rel="noopener noreferrer">Get in touch</a>
+  </section>
+
+  <section aria-labelledby="writing">
+    <h2 id="writing">Latest writing</h2>
+    {posts.length > 0 ? (
+      <div class="list">
+        {posts.map((post) => <BlogPostItem post={post} />)}
+        <p class="more"><a href="/blog/">All posts</a></p>
+      </div>
+    ) : (
+      <p class="muted">The first posts are on their way. In the meantime, the <a href="/biography/">biography</a> tells the story so far.</p>
+    )}
+  </section>
+
+  <section aria-labelledby="elsewhere">
+    <h2 id="elsewhere">Elsewhere</h2>
+    <div class="grid">
+      {site.profiles.map((p) => <ProfileLink {...p} />)}
+    </div>
+  </section>
+</Base>
+<style>
+  .intro { margin-top: var(--space-6); }
+  h1 { margin: var(--space-2) 0 var(--space-4); }
+  .lead { margin-bottom: var(--space-5); }
+  h2 { margin-bottom: var(--space-3); }
+  .grid { display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+  .more { margin-top: var(--space-3); border-top: 1px solid var(--hairline); padding-top: var(--space-3); }
+</style>
