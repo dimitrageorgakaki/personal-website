@@ -2,10 +2,23 @@
 import '@fontsource/comic-neue/700.css';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
-import { site } from '../data/site';
-interface Props { title?: string; description?: string }
-const { title, description = site.description } = Astro.props;
+import { site, url } from '../data/site';
+interface Props {
+  title?: string;
+  description?: string;
+  type?: 'website' | 'article';
+  publishedTime?: Date;
+  tags?: string[];
+}
+const { title, description = site.description, type = 'website', publishedTime, tags = [] } = Astro.props;
 const pageTitle = title ? `${title} · ${site.title}` : site.title;
+
+// Open Graph needs absolute URLs. Astro.site comes from the SITE variable that the deploy
+// workflow sets, so these tags are only written when it is known (not on local builds).
+const origin = Astro.site;
+const pageUrl = origin ? new URL(Astro.url.pathname, origin).href : undefined;
+const image = origin ? new URL(url('/og-collage.jpg'), origin).href : undefined;
+const imageAlt = 'AI-made collage of five portraits of Dimitra Georgakaki';
 ---
 <!doctype html>
 <html lang="en">
@@ -15,6 +28,23 @@ const pageTitle = title ? `${title} · ${site.title}` : site.title;
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
+    {pageUrl && <link rel="canonical" href={pageUrl} />}
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title ?? site.title} />
+    <meta property="og:description" content={description} />
+    {pageUrl && <meta property="og:url" content={pageUrl} />}
+    {image && <meta property="og:image" content={image} />}
+    {image && <meta property="og:image:width" content="1200" />}
+    {image && <meta property="og:image:height" content="630" />}
+    {image && <meta property="og:image:alt" content={imageAlt} />}
+    {type === 'article' && publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+    {type === 'article' && <meta property="article:author" content={site.name} />}
+    {type === 'article' && tags.map((t) => <meta property="article:tag" content={t} />)}
+    <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={title ?? site.title} />
+    <meta name="twitter:description" content={description} />
+    {image && <meta name="twitter:image" content={image} />}
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>

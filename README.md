@@ -15,6 +15,10 @@ npm run preview  # serve the built site
 
 `.github/workflows/deploy.yml` builds and publishes the site on every push to `main` (it can also be started by hand from the Actions tab). The repository is public, so Actions runs on standard runners are free. One-time setup: in the repository go to Settings, Pages, and set Source to **GitHub Actions**. The site then lives at `https://<user>.github.io/<repo>/`. The workflow sets `SITE` and `BASE_PATH` automatically; for a custom domain or a `<user>.github.io` repository, set `BASE_PATH` to an empty value in the workflow.
 
+## Link previews (Open Graph)
+
+Every page carries Open Graph and Twitter card tags, so links shared on LinkedIn and elsewhere show a title, a description and a picture. Titles and descriptions come from each page (for a post: its title and summary). The picture is `public/og-collage.jpg`, built from the collage by `node scripts/make-og-image.mjs`. The tags with absolute URLs are only written when the deploy workflow's `SITE` variable is set, so local builds omit them. LinkedIn caches previews; to refresh one, paste the link into the free [Post Inspector](https://www.linkedin.com/post-inspector/).
+
 ## Where things live
 
 | What | Where |
