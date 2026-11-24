@@ -26,11 +26,12 @@ const { Content } = await render(post);
 </Base>
 <style>
   article { margin-top: var(--space-6); }
-  .meta { color: var(--muted); font-size: 14px; margin-bottom: var(--space-2); }
+  .meta { color: var(--muted); font-size: 14px; margin-bottom: var(--space-2); text-align: center; }
   h1 { margin-bottom: var(--space-3); }
-  .tags { list-style: none; margin: 0 0 var(--space-5); padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-1); }
+  .tags { list-style: none; margin: 0 0 var(--space-5); padding: 0; display: flex; justify-content: center; flex-wrap: wrap; gap: var(--space-1); }
   .tag { text-decoration: none; margin: 0; }
   .tag:hover { border-color: var(--accent); color: var(--accent); }
+  .body :global(h2), .body :global(h3) { text-align: left; }
   .body :global(h2) { margin: var(--space-6) 0 var(--space-3); }
   .body :global(h3) { margin: var(--space-5) 0 var(--space-2); }
   .body :global(img) { max-width: 100%; height: auto; border-radius: var(--radius-md); }

@@ -12,7 +12,7 @@ const posts = (await getPosts()).slice(0, 3);
     <div class="eyebrow">Hello, I'm</div>
     <h1>{site.name}</h1>
     <p class="lead">{intro}</p>
-    <a class="button" href={`mailto:${site.email}`}>Get in touch</a>
+    <p class="actions"><a class="button" href={`mailto:${site.email}`}>Get in touch</a></p>
   </section>
 
   <FunPictures />
@@ -40,6 +40,7 @@ const posts = (await getPosts()).slice(0, 3);
   .intro { margin-top: var(--space-6); }
   h1 { margin: var(--space-2) 0 var(--space-4); }
   .lead { margin-bottom: var(--space-5); }
+  .actions { text-align: center; margin: 0; }
   h2 { margin-bottom: var(--space-3); }
   .grid { display: grid; gap: var(--space-3); grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
   .more { margin-top: var(--space-3); border-top: 1px solid var(--hairline); padding-top: var(--space-3); }
