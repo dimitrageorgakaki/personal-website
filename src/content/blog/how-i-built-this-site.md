@@ -31,6 +31,10 @@ The site is small, and the design tokens are CSS custom properties, so I did not
 
 The repository is public, and GitHub Pages hosts static sites for free. A short workflow builds the site and publishes it whenever I merge a change. I looked at other hosts that offer nicer preview links, but keeping the code, the history and the hosting in one place won for now. If I outgrow it, moving a static site is easy.
 
+## Continuous deployment with GitHub Actions
+
+Every change goes through a pull request. When I merge one into the main branch, a GitHub Actions workflow starts on its own: it installs the dependencies, builds the site and publishes it to GitHub Pages, usually in under a minute. If the build fails, nothing is published, so the live site never shows a half-finished version. Because the repository is public, this costs nothing, and I never have to deploy by hand.
+
 ## What I left out
 
 There is no analytics script, no comment system and no cookie banner. I also skipped an RSS feed for now. Each of these can be added later, and each one makes the site heavier. I would rather start small.
