@@ -1,6 +1,6 @@
 # Personal website
 
-A story-led personal site: intro, biography as a timeline, blog, and links to GitHub, LinkedIn and Academia. Built with [Astro](https://astro.build) and plain CSS, no client-side JavaScript.
+A story-led personal site: intro, biography as a timeline, blog, and links to GitHub, LinkedIn and Academia. Built with [Astro](https://astro.build) and plain CSS, with no client-side JavaScript of its own (the only script is the optional Umami one below).
 
 ## Run
 
@@ -18,6 +18,15 @@ npm run preview  # serve the built site
 ## Link previews (Open Graph)
 
 Every page carries Open Graph and Twitter card tags, so links shared on LinkedIn and elsewhere show a title, a description and a picture. Titles and descriptions come from each page (for a post: its title and summary). The picture is `public/og-collage.jpg`, built from the collage by `node scripts/make-og-image.mjs`. Every page has an author tag, and the home page also carries schema.org `ProfilePage` data (author, the launch date in `src/data/site.ts`, and the build date as last modified). The tags with absolute URLs are only written when the deploy workflow's `SITE` variable is set, so local builds omit them. LinkedIn caches previews; to refresh one, paste the link into the free [Post Inspector](https://www.linkedin.com/post-inspector/).
+
+## Visit statistics
+
+The site can count visitors, their countries and how long they stay, using [Umami Cloud](https://umami.is), which sets no cookies. It is on when `analytics.websiteId` in `src/data/site.ts` is set, and off when it is empty. To set it up for a new site or account:
+
+1. Create an Umami Cloud account and add the website (its address is `https://<user>.github.io/<repo>/`).
+2. Copy the website ID Umami shows you.
+3. Paste it into `analytics.websiteId` in `src/data/site.ts` and merge. The tracking script is only added to the deployed site (not local builds), only on the deployed host name, and it respects Do Not Track. A short note appears in the footer.
+4. If you remove analytics again, update the "What I left out" section of the first post, which now mentions it.
 
 ## Where things live
 

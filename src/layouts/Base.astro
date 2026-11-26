@@ -2,7 +2,7 @@
 import '@fontsource/comic-neue/700.css';
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
-import { site, url } from '../data/site';
+import { site, url, analytics } from '../data/site';
 interface Props {
   title?: string;
   description?: string;
@@ -66,6 +66,15 @@ const jsonLd =
     {type === 'article' && <meta property="article:author" content={site.name} />}
     {type === 'article' && tags.map((t) => <meta property="article:tag" content={t} />)}
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />}
+    {analytics.websiteId && origin && (
+      <script
+        defer
+        src={analytics.src}
+        data-website-id={analytics.websiteId}
+        data-domains={origin.hostname}
+        data-do-not-track="true"
+      ></script>
+    )}
     <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
     <meta name="twitter:title" content={title ?? site.title} />
     <meta name="twitter:description" content={description} />
@@ -79,10 +88,12 @@ const jsonLd =
       <p>© {new Date().getFullYear()} {site.name}. Find me elsewhere:
         {site.profiles.map((p, i) => <>{i ? ' · ' : ' '}<a href={p.href} target="_blank" rel="noopener noreferrer">{p.name}</a></>)}
       </p>
+      {analytics.websiteId && <p class="privacy">Visits are counted anonymously, without cookies, and your browser's Do Not Track setting is respected.</p>}
     </footer>
   </body>
 </html>
 <style>
   footer { padding-bottom: var(--space-6); font-size: 14px; color: var(--muted); }
   footer p { margin: 0; padding-top: var(--space-4); border-top: 1px solid var(--hairline); }
+  footer .privacy { border-top: 0; padding-top: var(--space-2); font-size: 13px; }
 </style>
