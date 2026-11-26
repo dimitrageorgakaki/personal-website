@@ -2,6 +2,7 @@ export const site = {
   name: 'Dimitra Georgakaki',
   title: 'Dimitra Georgakaki',
   email: 'georgakd@gmail.com',
+  launched: '2026-11-24', // the day the site went live
   description:
     'AI architecture, written down as a story: from computational materials science to systems built to last.',
   profiles: [

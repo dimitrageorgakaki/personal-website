@@ -1,7 +1,7 @@
 ---
 title: "How I built this site, and why I chose this stack"
 date: 2026-11-24
-summary: "A short tour of the tools behind this site and the reasons for each choice."
+summary: "A short tour of the tools behind this site (Astro, plain CSS and GitHub Pages) and the reasons I chose each one."
 tags: ["web", "design", "astro"]
 ---
 
@@ -30,6 +30,10 @@ The site is small, and the design tokens are CSS custom properties, so I did not
 ## GitHub Pages for hosting
 
 The repository is public, and GitHub Pages hosts static sites for free. A short workflow builds the site and publishes it whenever I merge a change. I looked at other hosts that offer nicer preview links, but keeping the code, the history and the hosting in one place won for now. If I outgrow it, moving a static site is easy.
+
+## Continuous deployment with GitHub Actions
+
+Every change goes through a pull request. When I merge one into the main branch, a GitHub Actions workflow starts on its own: it installs the dependencies, builds the site and publishes it to GitHub Pages, usually in under a minute. If the build fails, nothing is published, so the live site never shows a half-finished version. Because the repository is public, this costs nothing, and I never have to deploy by hand.
 
 ## What I left out
 
