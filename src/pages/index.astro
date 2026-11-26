@@ -7,7 +7,7 @@ import { intro, site, url } from '../data/site';
 import { getPosts } from '../data/posts';
 const posts = (await getPosts()).slice(0, 3);
 ---
-<Base>
+<Base profile>
   <section class="intro">
     <div class="eyebrow">Hello, I'm</div>
     <h1>{site.name}</h1>

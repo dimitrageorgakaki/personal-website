@@ -9,8 +9,9 @@ interface Props {
   type?: 'website' | 'article';
   publishedTime?: Date;
   tags?: string[];
+  profile?: boolean; // true on the home page: marks it as the author's profile page
 }
-const { title, description = site.description, type = 'website', publishedTime, tags = [] } = Astro.props;
+const { title, description = site.description, type = 'website', publishedTime, tags = [], profile = false } = Astro.props;
 const pageTitle = title ? `${title} · ${site.title}` : site.title;
 
 // Open Graph needs absolute URLs. Astro.site comes from the SITE variable that the deploy
@@ -19,6 +20,24 @@ const origin = Astro.site;
 const pageUrl = origin ? new URL(Astro.url.pathname, origin).href : undefined;
 const image = origin ? new URL(url('/og-collage.jpg'), origin).href : undefined;
 const imageAlt = 'AI-made collage of five portraits of Dimitra Georgakaki';
+
+// The home page is not an article, so it has no post date of its own. Describe it as the author's
+// profile page instead (schema.org ProfilePage): who the author is, when the site was published
+// and when it was last built. Needs absolute URLs, so it is only written when SITE is set.
+const jsonLd =
+  profile && pageUrl
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'ProfilePage',
+        name: site.title,
+        url: pageUrl,
+        description,
+        datePublished: site.launched,
+        dateModified: new Date().toISOString(),
+        author: { '@type': 'Person', name: site.name, url: pageUrl, sameAs: site.profiles.map((p) => p.href) },
+        mainEntity: { '@type': 'Person', name: site.name, url: pageUrl, image, sameAs: site.profiles.map((p) => p.href) },
+      }
+    : undefined;
 ---
 <!doctype html>
 <html lang="en">
@@ -28,6 +47,7 @@ const imageAlt = 'AI-made collage of five portraits of Dimitra Georgakaki';
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
+    <meta name="author" content={site.name} />
     {pageUrl && <link rel="canonical" href={pageUrl} />}
     <meta property="og:site_name" content={site.name} />
     <meta property="og:type" content={type} />
@@ -41,6 +61,7 @@ const imageAlt = 'AI-made collage of five portraits of Dimitra Georgakaki';
     {type === 'article' && publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
     {type === 'article' && <meta property="article:author" content={site.name} />}
     {type === 'article' && tags.map((t) => <meta property="article:tag" content={t} />)}
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />}
     <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
     <meta name="twitter:title" content={title ?? site.title} />
     <meta name="twitter:description" content={description} />
