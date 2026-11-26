@@ -19,6 +19,25 @@ const origin = Astro.site;
 const pageUrl = origin ? new URL(Astro.url.pathname, origin).href : undefined;
 const image = origin ? new URL(url('/og-collage.jpg'), origin).href : undefined;
 const imageAlt = 'AI-made collage of five portraits of Dimitra Georgakaki';
+const authorUrl = origin ? new URL(url('/biography/'), origin).href : undefined;
+
+// Structured data (schema.org BlogPosting): the author and publish date that crawlers such as
+// LinkedIn's Post Inspector look for. Needs absolute URLs, so it is only written when SITE is set.
+const jsonLd =
+  type === 'article' && pageUrl && publishedTime
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: title ?? site.title,
+        description,
+        datePublished: publishedTime.toISOString(),
+        dateModified: publishedTime.toISOString(),
+        author: { '@type': 'Person', name: site.name, url: authorUrl, sameAs: site.profiles.map((p) => p.href) },
+        image: image ? [image] : undefined,
+        keywords: tags.length ? tags.join(', ') : undefined,
+        mainEntityOfPage: { '@type': 'WebPage', '@id': pageUrl },
+      }
+    : undefined;
 ---
 <!doctype html>
 <html lang="en">
@@ -28,6 +47,7 @@ const imageAlt = 'AI-made collage of five portraits of Dimitra Georgakaki';
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <meta name="color-scheme" content="light dark" />
+    <meta name="author" content={site.name} />
     {pageUrl && <link rel="canonical" href={pageUrl} />}
     <meta property="og:site_name" content={site.name} />
     <meta property="og:type" content={type} />
@@ -39,8 +59,10 @@ const imageAlt = 'AI-made collage of five portraits of Dimitra Georgakaki';
     {image && <meta property="og:image:height" content="630" />}
     {image && <meta property="og:image:alt" content={imageAlt} />}
     {type === 'article' && publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
-    {type === 'article' && <meta property="article:author" content={site.name} />}
+    {type === 'article' && authorUrl && <meta property="article:author" content={authorUrl} />}
+    {type === 'article' && publishedTime && <meta name="date" content={publishedTime.toISOString()} />}
     {type === 'article' && tags.map((t) => <meta property="article:tag" content={t} />)}
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd).replace(/</g, '\\u003c')} />}
     <meta name="twitter:card" content={image ? 'summary_large_image' : 'summary'} />
     <meta name="twitter:title" content={title ?? site.title} />
     <meta name="twitter:description" content={description} />

@@ -17,7 +17,7 @@ npm run preview  # serve the built site
 
 ## Link previews (Open Graph)
 
-Every page carries Open Graph and Twitter card tags, so links shared on LinkedIn and elsewhere show a title, a description and a picture. Titles and descriptions come from each page (for a post: its title and summary). The picture is `public/og-collage.jpg`, built from the collage by `node scripts/make-og-image.mjs`. The tags with absolute URLs are only written when the deploy workflow's `SITE` variable is set, so local builds omit them. LinkedIn caches previews; to refresh one, paste the link into the free [Post Inspector](https://www.linkedin.com/post-inspector/).
+Every page carries Open Graph and Twitter card tags, so links shared on LinkedIn and elsewhere show a title, a description and a picture. Titles and descriptions come from each page (for a post: its title and summary). The picture is `public/og-collage.jpg`, built from the collage by `node scripts/make-og-image.mjs`. Posts also carry their author and publish date in three forms that crawlers recognise: `article:author` and `article:published_time` tags, a `<meta name="author">` tag, and schema.org `BlogPosting` structured data (JSON-LD). The tags with absolute URLs are only written when the deploy workflow's `SITE` variable is set, so local builds omit them. LinkedIn caches previews; to refresh one, paste the link into the free [Post Inspector](https://www.linkedin.com/post-inspector/).
 
 ## Where things live
 

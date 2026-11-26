@@ -14,7 +14,7 @@ const { Content } = await render(post);
 <Base title={post.data.title} description={post.data.summary} type="article" publishedTime={post.data.date} tags={post.data.tags}>
   <article>
     <p class="back"><a href={url('/blog/')}>← All posts</a></p>
-    <div class="meta">{formatDate(post.data.date)} · {readingTime(post.body)}</div>
+    <div class="meta"><time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time> · {readingTime(post.body)}</div>
     <h1>{post.data.title}</h1>
     {post.data.tags.length > 0 && (
       <ul class="tags" aria-label="Tags">
