@@ -1,7 +1,7 @@
 ---
 title: "How I built this site, and why I chose this stack"
 date: 2026-11-24
-summary: "A short tour of the tools behind this site and the reasons for each choice."
+summary: "A short tour of the tools behind this site (Astro, plain CSS and GitHub Pages) and the reasons I chose each one."
 tags: ["web", "design", "astro"]
 ---
 

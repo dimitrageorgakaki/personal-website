@@ -13,6 +13,10 @@ interface Props {
 }
 const { title, description = site.description, type = 'website', publishedTime, tags = [], profile = false } = Astro.props;
 const pageTitle = title ? `${title} · ${site.title}` : site.title;
+if (description.length < 100) {
+  // LinkedIn's Post Inspector warns about link preview descriptions under 100 characters.
+  console.warn(`[link preview] Description for "${title ?? site.title}" is ${description.length} characters; aim for at least 100.`);
+}
 
 // Open Graph needs absolute URLs. Astro.site comes from the SITE variable that the deploy
 // workflow sets, so these tags are only written when it is known (not on local builds).

@@ -13,7 +13,7 @@ export async function getStaticPaths() {
 }
 const { tag, posts } = Astro.props;
 ---
-<Base title={`Posts tagged ${tag}`} description={`Blog posts tagged ${tag}.`}>
+<Base title={`Posts tagged ${tag}`} description={`Blog posts tagged ${tag}, from the personal blog of Dimitra Georgakaki on AI architecture and building systems that last.`}>
   <section class="head">
     <p class="back"><a href={url('/blog/')}>← All posts</a></p>
     <div class="eyebrow">Tag</div>
