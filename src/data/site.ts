@@ -20,11 +20,11 @@ export const site = {
   ],
 };
 
-// Anonymous visit statistics with Umami Cloud (https://umami.is). Analytics stays OFF until
-// websiteId is filled in: create a free account, add this site, and paste its website ID here.
+// Anonymous visit statistics with Umami Cloud (https://umami.is). Analytics is OFF whenever
+// websiteId is empty: to switch it off, clear it; to change account, paste the new website ID.
 // The ID is public (it appears in the page source), so it is safe to commit.
 export const analytics = {
-  websiteId: '',
+  websiteId: 'a9e8f599-2bd0-4904-aaad-4baf778d6e04',
   src: 'https://cloud.umami.is/script.js',
 };
 

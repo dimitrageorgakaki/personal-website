@@ -37,7 +37,7 @@ Every change goes through a pull request. When I merge one into the main branch,
 
 ## What I left out
 
-There is no analytics script, no comment system and no cookie banner. I also skipped an RSS feed for now. Each of these can be added later, and each one makes the site heavier. I would rather start small.
+There is no comment system and no cookie banner, and I skipped an RSS feed for now. The one thing I did add is a small script from Umami, a privacy-friendly tool that sets no cookies. It tells me how many people visit, from which countries and for how long, and nothing more. Anything else can be added later, and each addition makes the site heavier. I would rather start small.
 
 ## Built with an AI assistant
 
